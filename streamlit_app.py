@@ -14,7 +14,7 @@ def obtener_archivos():
 st.set_page_config(page_title="Entregas Temu Juliaca", page_icon="📦", layout="centered")
 st.title("📦 Generador de Avisos (Temu)")
 
-**1. Selecciona o crea tu archivo**
+st.markdown("**1. Selecciona o crea tu archivo**")
 col1, col2 = st.columns(2)
 
 with col1:
@@ -44,7 +44,7 @@ st.markdown("---")
 tab1, tab2 = st.tabs(["📲 2. Guardar y Enviar", "📋 3. Ver Registros"])
 
 with tab1:
-    **Ingresa el Número**
+    st.markdown("**Ingresa el Número**")
     numero_final = st.text_input("Número de celular (9 dígitos):", max_chars=9)
 
     if numero_final:
@@ -92,14 +92,14 @@ with tab2:
     if not archivo_activo:
         st.info("👆 Selecciona un archivo en la parte superior.")
     else:
-        **Lista de números guardados**
+        st.markdown(f"**Lista de números guardados en {archivo_activo}**")
         ruta_ver = os.path.join(CARPETA_REGISTROS, archivo_activo)
         
         try:
             with open(ruta_ver, "r", encoding="utf-8") as f:
                 contenido = f.read()
             
-            st.text_area(f"Números en {archivo_activo}:", value=contenido, height=350)
+            st.text_area("Números:", value=contenido, height=350)
             
             st.download_button(
                 label=f"📥 Descargar {archivo_activo}",
