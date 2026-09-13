@@ -16,12 +16,13 @@ if numero_final:
         # Agregar el código de Perú (51)
         num_completo = "51" + numero_final
         
-        # El mensaje personalizado
+        # El mensaje actualizado con el aviso urgente de 12 horas y devolución a China
         mensaje = (
             "Hola! 👋 Te avisamos que tu pedido de Temu ya llegó a la ciudad de Juliaca "
             "y está por ser entregado. 📦\n\n"
-            "Para el correcto envío de tu paquete, por favor ayúdanos respondiendo este breve cuestionario:\n"
-            "👉 https://docs.google.com/forms/d/e/1FAIpQLSdj8oVFPZkRmb71tv8ZI2f9DHjZmlSZCoHDO7pTqZFwJ27tQA/viewform?usp=header"
+            "🚨 *AVISO URGENTE*: Para la correcta entrega de tu pedido, debes responder este cuestionario de manera urgente:\n"
+            "👉 https://docs.google.com/forms/d/e/1FAIpQLSdj8oVFPZkRmb71tv8ZI2f9DHjZmlSZCoHDO7pTqZFwJ27tQA/viewform?usp=header\n\n"
+            "⚠️ *Nota importante*: Caso contrario de no responder en un lapso de 12 horas, tu pedido será devuelto a China."
         )
         
         # Convertir el texto para que funcione en un enlace web
