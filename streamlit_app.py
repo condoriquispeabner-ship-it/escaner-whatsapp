@@ -1,7 +1,7 @@
 import streamlit as st
 import re
 import urllib.parse
-from PIL import Image
+from PIL import Image, ImageEnhance  # <-- Agregamos ImageEnhance para mejorar la foto
 import pytesseract
 
 # Configuración de la página
@@ -26,15 +26,23 @@ with tab2:
 
 if imagen:
     st.image(imagen, caption="Etiqueta cargada", use_container_width=True)
-    st.info("🔍 Analizando la imagen en busca del número...")
+    st.info("🔍 Analizando la imagen con filtro de alto contraste...")
     
     try:
-        # Convertir a escala de grises para que Tesseract lea mejor el texto negro sobre blanco
-        imagen_gris = imagen.convert('L')
-        texto_detectado = pytesseract.image_to_string(imagen_gris)
+        # MEJORA 1: Filtro de imagen
+        imagen_gris = imagen.convert('L') # Convertir a blanco y negro
+        enhancer = ImageEnhance.Contrast(imagen_gris)
+        imagen_contraste = enhancer.enhance(3.0) # Aumentar el contraste al triple para borrar sombras
         
-        # Busca un número de 9 dígitos que empiece por 9 (ignora guiones o espacios)
-        numeros = re.findall(r'9\d{8}', re.sub(r'[\s\-]', '', texto_detectado))
+        # Leer el texto de la imagen mejorada
+        texto_detectado = pytesseract.image_to_string(imagen_contraste)
+        
+        # MEJORA 2: Limpieza profunda de texto
+        # Borra TODO lo que no sea un número (letras, puntos, guiones de la etiqueta, etc.)
+        solo_numeros = re.sub(r'\D', '', texto_detectado)
+        
+        # Busca cualquier bloque de 9 números que empiece con 9
+        numeros = re.findall(r'9\d{8}', solo_numeros)
         
         numero_sugerido = ""
         if numeros:
@@ -48,7 +56,6 @@ if imagen:
         if numero_final and len(numero_final) == 9:
             num_completo = "51" + numero_final
             
-            # MENSAJE ACTUALIZADO Y FORMATEADO PARA WHATSAPP
             mensaje = (
                 "Hola! 👋 Te avisamos que tu pedido de Temu ya llegó a la ciudad de Juliaca "
                 "y está por ser entregado. 📦\n\n"
@@ -56,11 +63,9 @@ if imagen:
                 "👉 https://docs.google.com/forms/d/e/1FAIpQLSdj8oVFPZkRmb71tv8ZI2f9DHjZmlSZCoHDO7pTqZFwJ27tQA/viewform?usp=header"
             )
             
-            # Preparamos el mensaje para que sea un enlace web válido
             mensaje_codificado = urllib.parse.quote(mensaje)
             link_whatsapp = f"https://wa.me/{num_completo}?text={mensaje_codificado}"
             
-            # Botón verde de WhatsApp
             st.markdown(f"""
             <a href="{link_whatsapp}" target="_blank" style="display: block; width: 100%; text-align: center; background-color: #25D366; color: white; padding: 15px; border-radius: 10px; text-decoration: none; font-size: 18px; font-weight: bold; margin-top: 20px;">
                 📲 Enviar aviso al {numero_final}
