@@ -16,13 +16,17 @@ if numero_final:
         # Agregar el código de Perú (51)
         num_completo = "51" + numero_final
         
-        # El mensaje actualizado con el aviso urgente de 12 horas y devolución a China
+        # El mensaje completo con la encuesta, la advertencia de 12 horas y la alternativa presencial
         mensaje = (
             "Hola! 👋 Te avisamos que tu pedido de Temu ya llegó a la ciudad de Juliaca "
             "y está por ser entregado. 📦\n\n"
             "🚨 *AVISO URGENTE*: Para la correcta entrega de tu pedido, debes responder este cuestionario de manera urgente:\n"
             "👉 https://docs.google.com/forms/d/e/1FAIpQLSdj8oVFPZkRmb71tv8ZI2f9DHjZmlSZCoHDO7pTqZFwJ27tQA/viewform?usp=header\n\n"
-            "⚠️ *Nota importante*: Caso contrario de no responder en un lapso de 12 horas, tu pedido será devuelto a China."
+            "⚠️ *Nota importante*: Caso contrario de no responder en un lapso de 12 horas, tu pedido será devuelto a China.\n\n"
+            "🏢 En caso de no poder o querer responder la encuesta, para tu control puedes acercarte a nuestra dirección "
+            "con tu respectivo DNI:\n"
+            "📍 https://maps.app.goo.gl/zyx2dPASQSi9HYjy6\n"
+            "🕒 Horario de atención: De lunes a domingo entre la 1:00 PM y 10:00 PM."
         )
         
         # Convertir el texto para que funcione en un enlace web
