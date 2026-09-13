@@ -14,8 +14,9 @@ tab1, tab2 = st.tabs(["📷 Usar Cámara", "📂 Subir de Galería"])
 imagen = None
 
 with tab1:
-    # 'environment' fuerza el uso de la cámara trasera en celulares
-    imagen_camara = st.camera_input("Captura el recibo o número", camera_type="environment")
+    # Se quitó el parámetro que causaba el error. 
+    # Para cambiar a la cámara trasera, usa el botón de "girar cámara" que aparecerá en tu celular.
+    imagen_camara = st.camera_input("Captura el recibo o número")
     if imagen_camara:
         imagen = Image.open(imagen_camara)
 
@@ -25,16 +26,13 @@ with tab2:
         imagen = Image.open(imagen_subida)
 
 if imagen:
-    # Se corrigió el parámetro de imagen para evitar el TypeError
     st.image(imagen, caption="Imagen lista", use_container_width=True)
     st.info("🔍 Analizando la imagen...")
     
     try:
-        # Preprocesamiento de la imagen para mejorar la lectura OCR (escala de grises)
         imagen_gris = imagen.convert('L')
         texto_detectado = pytesseract.image_to_string(imagen_gris)
         
-        # Busca secuencias de 9 dígitos que comiencen con 9
         numeros = re.findall(r'9\d{8}', re.sub(r'[\s\-]', '', texto_detectado))
         
         numero_sugerido = ""
